@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión y Juegos</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #4A90E2, #50C9C3);
+            color: #333;
+        }
+
+        .container {
+            background-color: #fff;
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Contenedor de los elementos en formato lista */
+        ul {
+            padding: 0;
+            list-style: none;
+            margin: 0;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        /* Formato de los campos de entrada */
+        input[type="text"], input[type="password"], input[type="number"], input[type="button"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input[type="button"] {
+            background-color: #4A90E2;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="button"]:hover {
+            background-color: #357ABD;
+        }
+
+        .message {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .image-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h3 {
+            margin-bottom: 15px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Título y inicio de sesión -->
+        <h2>Bienvenido, por favor inicia sesión</h2>
+        <ul>
+            <li><input type="text" id="username" placeholder="Usuario"></li>
+            <li><input type="password" id="password" placeholder="Contraseña"></li>
+            <li><input type="button" value="Ingresar" onclick="login()"></li>
+        </ul>
+        <p id="loginMessage" class="message"></p>
+
+        <div class="image-container">
+            <img src="imagen.jpg" alt="Imagen de ejemplo">
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Simulador de Crédito -->
+        <div class="section">
+            <h3>Simulador de Crédito</h3>
+            <ul>
+                <li><input type="number" id="investment" placeholder="Monto de inversión"></li>
+                <li><input type="number" id="interestRate" placeholder="Tasa de interés (%)"></li>
+                <li><input type="button" value="Calcular" onclick="calculateInvestment()"></li>
+            </ul>
+            <p>Total después de un año:</p>
+            <input type="text" id="result" readonly>
+        </div>
+
+        <!-- Piedra, Papel o Tijera -->
+        <div class="section">
+            <h3>Piedra, Papel o Tijera</h3>
+            <ul>
+                <li><input type="text" id="userChoice" placeholder="Ingresa Piedra, Papel o Tijera"></li>
+                <li><input type="button" value="Jugar" onclick="playGame()"></li>
+            </ul>
+            <p>Opción de la computadora:</p>
+            <input type="text" id="computerChoice" readonly>
+            <p>Resultado:</p>
+            <input type="text" id="gameResult" readonly>
+        </div>
+    </div>
+
+    <script>
+        // Función de inicio de sesión
+        function login() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            if (username === "admin" && password === "1234") {
+                document.getElementById("loginMessage").textContent = "Inicio de sesión exitoso";
+                document.getElementById("loginMessage").style.color = "green";
+            } else {
+                document.getElementById("loginMessage").textContent = "Usuario o contraseña incorrectos";
+            }
+        }
+
+        // Función para el simulador de crédito
+        function calculateInvestment() {
+            const investment = parseFloat(document.getElementById("investment").value);
+            const interestRate = parseFloat(document.getElementById("interestRate").value);
+
+            if (!isNaN(investment) && !isNaN(interestRate)) {
+                const total = investment + (investment * (interestRate / 100));
+                document.getElementById("result").value = total.toFixed(2);
+            } else {
+                document.getElementById("result").value = "Por favor, ingresa valores válidos";
+            }
+        }
+
+        // Función para Piedra, Papel o Tijera
+        function playGame() {
+            const userChoice = document.getElementById("userChoice").value.toLowerCase();
+            const choices = ["piedra", "papel", "tijera"];
+            const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+
+            document.getElementById("computerChoice").value = computerChoice;
+
+            if (userChoice === computerChoice) {
+                document.getElementById("gameResult").value = "Empate";
+            } else if (
+                (userChoice === "piedra" && computerChoice === "tijera") ||
+                (userChoice === "papel" && computerChoice === "piedra") ||
+                (userChoice === "tijera" && computerChoice === "papel")
+            ) {
+                document.getElementById("gameResult").value = "Ganaste";
+            } else {
+                document.getElementById("gameResult").value = "Perdiste";
+            }
+        }
+    </script>
+</body>
+</html>
